@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ClipAI — Viral Short Clips</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+</head>
+
+<body>
+<nav class="nav"><div class="logo">ClipAI</div><span class="tag">FREE · NO WATERMARK</span></nav>
+<div class="hero">
+  <h1>Turn Long Videos Into<br/><span>Viral Clips</span></h1>
+  <p>AI clips · Copyright protection · Captions · 9:16</p>
+</div>
+<div class="box">
+  <div class="drop" id="drop">
+    <div style="font-size:2rem">🎬</div>
+    <h3 style="margin:8px 0 4px">Tap to upload video</h3>
+    <p style="color:#64748b;font-size:0.82rem">MP4, MOV, MKV — up to 500MB</p>
+    <input type="file" id="file" accept="video/*"/>
+  </div>
+  <div class="chosen" id="chosen"></div>
+
+  <div style="background:#1a1a2e;border:1px solid #2d2d4e;border-radius:10px;padding:12px 14px;margin-bottom:4px;display:flex;align-items:flex-start;gap:10px">
+    <span style="font-size:1.2rem">📱</span>
+    <div>
+      <div style="font-size:0.82rem;font-weight:700;color:#e2e8f0;margin-bottom:3px">Upload your video file</div>
+      <div style="font-size:0.75rem;color:#64748b;line-height:1.5">Download your video from YouTube, TikTok, Instagram or any platform first, then upload it above. URL links are not supported.</div>
+    </div>
+  </div>
+
+  <div class="section-title">Clip Settings <span></span></div>
+  <div class="row">
+    <div><label>Number of clips</label>
+    <select id="num"><option value="3">3 clips</option><option value="5" selected>5 clips</option><option value="8">8 clips</option></select></div>
+    <div><label>Clip length</label>
+    <select id="len"><option value="30">30s</option><option value="45">45s</option><option value="60" selected>60s</option><option value="90">90s</option></select></div>
+  </div>
+
+  <div class="section-title">Content Focus <span></span></div>
+  <div class="topics">
+    <div class="topic active" onclick="selectTopic(this,'general')">🎯 General</div>
+    <div class="topic" onclick="selectTopic(this,'funny')">😂 Funny</div>
+    <div class="topic" onclick="selectTopic(this,'emotional')">❤️ Emotional</div>
+    <div class="topic" onclick="selectTopic(this,'educational')">📚 Educational</div>
+    <div class="topic" onclick="selectTopic(this,'motivational')">💪 Motivational</div>
+    <div class="topic" onclick="selectTopic(this,'shocking')">😱 Shocking</div>
+  </div>
+
+  <div class="section-title">Video Features <span></span></div>
+  <div class="toggles">
+    <div class="toggle-row">
+      <div><div class="tl">📐 9:16 Reframe</div><div class="ts">Optimized for TikTok/Reels/Shorts</div></div>
+      <label class="toggle"><input type="checkbox" id="reframe" checked/><span class="slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <div><div class="tl">💬 Auto Captions</div><div class="ts">Burns subtitles into video</div></div>
+      <label class="toggle"><input type="checkbox" id="captions" checked/><span class="slider"></span></label>
+    </div>
+    <div id="captionStyleSection" class="toggle-row" style="flex-direction:column;align-items:flex-start;gap:10px">
+      <div><div class="tl">💬 Caption Style</div><div class="ts">Choose how captions look</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%">
+        <div class="cap-style active" onclick="selectCapStyle(this,'classic')" style="background:#13132a;border:1px solid #a78bfa;border-radius:8px;padding:10px;cursor:pointer;text-align:center">
+          <div style="font-size:0.8rem;font-weight:700;color:white">Classic</div>
+          <div style="font-size:0.68rem;color:#94a3b8;margin-top:3px">White text, black outline</div>
+        </div>
+        <div class="cap-style" onclick="selectCapStyle(this,'bold')" style="background:#0f0f1a;border:1px solid #2d2d4e;border-radius:8px;padding:10px;cursor:pointer;text-align:center">
+          <div style="font-size:0.8rem;font-weight:700;color:#fbbf24">Bold Yellow</div>
+          <div style="font-size:0.68rem;color:#94a3b8;margin-top:3px">Big yellow words</div>
+        </div>
+        <div class="cap-style" onclick="selectCapStyle(this,'tiktok')" style="background:#0f0f1a;border:1px solid #2d2d4e;border-radius:8px;padding:10px;cursor:pointer;text-align:center">
+          <div style="font-size:0.8rem;font-weight:700;color:#ff0050">TikTok Style</div>
+          <div style="font-size:0.68rem;color:#94a3b8;margin-top:3px">Red highlight box</div>
+        </div>
+        <div class="cap-style" onclick="selectCapStyle(this,'minimal')" style="background:#0f0f1a;border:1px solid #2d2d4e;border-radius:8px;padding:10px;cursor:pointer;text-align:center">
+          <div style="font-size:0.8rem;font-weight:700;color:#94a3b8">Minimal</div>
+          <div style="font-size:0.68rem;color:#64748b;margin-top:3px">Small subtle text</div>
+        </div>
+        <div class="cap-style" onclick="selectCapStyle(this,'fire')" style="background:#0f0f1a;border:1px solid #2d2d4e;border-radius:8px;padding:10px;cursor:pointer;text-align:center">
+          <div style="font-size:0.8rem;font-weight:700;color:#f97316">🔥 Fire</div>
+          <div style="font-size:0.68rem;color:#94a3b8;margin-top:3px">Orange glow effect</div>
+        </div>
+        <div class="cap-style" onclick="selectCapStyle(this,'neon')" style="background:#0f0f1a;border:1px solid #2d2d4e;border-radius:8px;padding:10px;cursor:pointer;text-align:center">
+          <div style="font-size:0.8rem;font-weight:700;color:#a78bfa">⚡ Neon</div>
+          <div style="font-size:0.68rem;color:#94a3b8;margin-top:3px">Purple glow</div>
+        </div>
+      </div>
+    </div>
+    <div class="toggle-row">
+      <div><div class="tl">🔄 Mirror Flip</div><div class="ts">Horizontally flips video</div></div>
+      <label class="toggle"><input type="checkbox" id="mirror"/><span class="slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <div><div class="tl">🎨 Color Grade</div><div class="ts">Adjusts brightness & contrast</div></div>
+      <label class="toggle"><input type="checkbox" id="colorgrade" checked/><span class="slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <div><div class="tl">⚡ Speed Adjust</div><div class="ts">Slight speed change (101%)</div></div>
+      <label class="toggle"><input type="checkbox" id="speed" checked/><span class="slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <div><div class="tl">🎵 Pitch Shift Audio</div><div class="ts">Slightly shifts audio pitch</div></div>
+      <label class="toggle"><input type="checkbox" id="pitch" checked/><span class="slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <div><div class="tl">🎶 Background Music</div><div class="ts">Adds soft beat under your clip</div></div>
+      <label class="toggle"><input type="checkbox" id="music"/><span class="slider"></span></label>
+    </div>
+  </div>
+
+  <div class="section-title">Copyright Protection Level <span></span></div>
+  <div class="cp-grid">
+    <div class="cp-item active" onclick="selectCP(this,'none')">
+      <div class="cp-icon">🟢</div>
+      <div class="cp-name">None</div>
+      <div class="cp-desc">Original quality, no changes</div>
+    </div>
+    <div class="cp-item" onclick="selectCP(this,'light')">
+      <div class="cp-icon">🟡</div>
+      <div class="cp-name">Light</div>
+      <div class="cp-desc">Speed + color tweak</div>
+    </div>
+    <div class="cp-item" onclick="selectCP(this,'medium')">
+      <div class="cp-icon">🟠</div>
+      <div class="cp-name">Medium</div>
+      <div class="cp-desc">Flip + pitch + speed</div>
+    </div>
+    <div class="cp-item" onclick="selectCP(this,'strong')">
+      <div class="cp-icon">🔴</div>
+      <div class="cp-name">Strong</div>
+      <div class="cp-desc">All changes applied</div>
+    </div>
+  </div>
+
+  <button class="btn" id="btn" onclick="start()" disabled>✨ Generate Clips</button>
+  <div class="err" id="err"></div>
+</div>
+
+<div class="progress" id="prog">
+  <div class="pcard">
+    <h3 style="margin-bottom:14px">⚙️ Processing...</h3>
+    <div id="steps"></div>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <div class="upload-pct" id="uploadPct"></div>
+  </div>
+</div>
+
+<div class="results" id="results">
+  <div class="rhead"><h2>🎉 Clips Ready!</h2><button class="nbtn" onclick="resetApp()">+ New</button></div>
+  <div id="cliplist"></div>
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body></html>
